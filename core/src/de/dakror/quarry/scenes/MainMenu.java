@@ -176,7 +176,7 @@ public class MainMenu extends Scene implements Ui {
         stage.addActor(toast);
 
         final ImageButton de = Util.id("lang");
-        de.setChecked(Quarry.Q.i18n.getLocale().getLanguage().equals("en"));
+        de.setChecked(Quarry.Q.i18n.getLocale().getLanguage().equals("zh"));
         de.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -185,7 +185,7 @@ public class MainMenu extends Scene implements Ui {
                     @Override
                     public void call(Void data) {}
                 });
-                Quarry.Q.prefs.putBoolean("german", !de.isChecked()).flush();
+                Quarry.Q.prefs.putBoolean("english", !de.isChecked()).flush();
             }
         });
 

@@ -173,7 +173,9 @@ public class LoadingScreen extends Scene {
         FreeTypeFontParameter param = new FreeTypeFontParameter();
         param.magFilter = TextureFilter.Linear;
         param.minFilter = TextureFilter.Linear;
+        param.characters = FreeTypeFontGenerator.DEFAULT_CHARS + "你缺乏一些科学知识来描绘这个蓝图。此自更新的游戏版本，无法加载该存档由完整创建在演示中请重启使语言改生效文件区域网格增强筑造电缆切断选择拆除用器：共享时间并且同步粘贴暂停从库取出将退还资源放入储打开技目录产摘要燃料元满托盘液体油材原矿粉可堆叠消否确定是删吗？不撤销恭喜已经成了采石场全部内容希望欢前往商店购买支持小型独立发者工作我会非常感激！论都结束保所以卡里如果现它继续玩栋其有物品永远失相连漏斗起钻头覆盖先当城高级机架池砖块青铜锭板丝碳纤维水泥木炭（）芯片土煤混凝碎管桶细炸药空罐天然气玻璃金火硬化钢属预处理蒸馏铁铅润滑剂磁熔融硅银锡钛纸张塑珠壳合压汽黄英精炼转子沙脚手隧道井段线硫磺晶涡轮正声音导读外夹回主菜单没另为教程输名种码意味着什么就按运或缩地基础升通过上写东西助推换附近速度很己组装巅峰之至少计算谨慎施心最终收多力供应待足大功率复杂获得被极而性制折弯和扭曲却够壮试扩械挖掘深提进术始动价值黑抽利泵集五颜六色实错但形状行滤解锁筛及航太阳能表量让坚圆长纯净必须把命变业优势等周围尘埃锚充低口配弧焊构接防耐汇编盐良好护套封底面填包裹根棒标准尺寸叶到杆固几台球磨较软数某式质炉任何类沸烧需温越受流热竖两邻层下对矩阵离分含见稀快致密粗巨冷传送带沿方向桥允许条互交叉每秒千焦均匀布坩埚拉设备模具字据耗即柱萃顶缓慢后引爆灌便于限双循环串联只边置冶铸倒注态降梯窑陶伐人植砍树匠割漂亮剩余浆与浸泡洗才仅侧聚培养链塔户厂普岩辊平锯验室摆弄看奇情况彼筒仓光核依次垛卸比再们去节点适冲超泄箱简绕轴真阀门控车洒项勤剪败拒绝访问活迎骤击息查第止世界诸达埋藏宝样特征直他“”键辅拖拽端志轨哎呀像题旋钮…误事返随指移视野屏幕滚箭鼠仔观察称初显左角右总首稳规、述求脉绿调位恢尽考虑报告反馈未胜谢您截翻修默认关闭减统帝盒际别鸣谈汉";
         if (Quarry.Q.desktop) {
+            //param.size = (int) (dp * (float) Gdx.graphics.getDensity()); // for 4K screen
             param.size = (int) (dp * (float) Quarry.Q.pi.message(Const.MSG_DPI, null));
         } else {
             param.size = (int) (dp * (float) Quarry.Q.pi.message(Const.MSG_DPI, null));

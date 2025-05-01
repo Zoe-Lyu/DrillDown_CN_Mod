@@ -38,6 +38,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.modified.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -127,6 +128,7 @@ public class Menu {
         });
         menuButton.setPosition(12, Const.UI_H - menuButton.getHeight() - 12);
         menuButton.setName("menuButton");
+        menuButton.addListener(new TextTooltip(Quarry.Q.i18n.get("button.menu"), skin));
         stage.addActor(menuButton);
 
         menu = Util.id("menu");
@@ -422,7 +424,7 @@ public class Menu {
         });
 
         final ImageButton de = Util.id("lang");
-        de.setChecked(Quarry.Q.i18n.getLocale().getLanguage().equals("en"));
+        de.setChecked(Quarry.Q.i18n.getLocale().getLanguage().equals("zh"));
         de.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -432,7 +434,7 @@ public class Menu {
                     public void call(Void data) {
                     }
                 });
-                Quarry.Q.prefs.putBoolean("german", !de.isChecked()).flush();
+                Quarry.Q.prefs.putBoolean("english", !de.isChecked()).flush();
             }
         });
 

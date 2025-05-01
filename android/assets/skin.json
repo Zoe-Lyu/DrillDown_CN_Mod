@@ -201,8 +201,8 @@
 			"imageUp": "symb_x"
 		},
 		"lang": {
-			"imageUp": "flag_de",
-			"imageChecked": "flag_en",
+			"imageUp": "flag_en",
+			"imageChecked": "flag_de",
 			"pressedOffsetX": 2,
 			"pressedOffsetY": -2
 		},

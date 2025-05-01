@@ -414,6 +414,7 @@ public class GameUi implements Ui {
         rotateButton.getImageCell().size(64);
         rotateButton.setPosition(Const.UI_W / 2 - rotateButton.getWidth() * 1.25f, 500);
         rotateButton.setName("rotateButton");
+        rotateButton.addListener(new TextTooltip(Quarry.Q.i18n.get("button.rotate"), skin));
         stage.addActor(rotateButton);
 
         flipButton = Util.id("flip");
@@ -427,6 +428,7 @@ public class GameUi implements Ui {
         flipButton.getImageCell().size(64);
         flipButton.setPosition(Const.UI_W / 2 + flipButton.getWidth() / 4, 500);
         flipButton.setName("flipButton");
+        flipButton.addListener(new TextTooltip(Quarry.Q.i18n.get("button.flip"), skin));
         stage.addActor(flipButton);
 
         buildButton = roundButton(skin, skin.getDrawable("icon_build"), new ClickListener() {

@@ -46,7 +46,7 @@ import de.dakror.quarry.util.Util;
 @LmlTag(tagName = "layerselection")
 public class LayerSelection extends Table implements CustomTag, Listener<Layer> {
     Label label;
-    ImageButton up, up10, down, down10;
+    public ImageButton up, up10, down, down10;
     VerticalGroup minerals;
 
     public LayerSelection(Skin skin, String style) {

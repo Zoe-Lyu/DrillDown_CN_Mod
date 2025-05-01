@@ -56,7 +56,7 @@ public class Credits extends Scene {
         Table table = new Table();
         table.setFillParent(true);
         table.row().grow();
-        Label l = new Label(Gdx.files.internal("CREDITS.txt").readString(), Quarry.Q.skin);
+        Label l= new Label(Quarry.Q.i18n.get("button.credits") + "\r\n\r\n" + Gdx.files.internal("CREDITS.txt").readString(), Quarry.Q.skin);
         l.setWrap(true);
         l.setAlignment(Align.topLeft);
 

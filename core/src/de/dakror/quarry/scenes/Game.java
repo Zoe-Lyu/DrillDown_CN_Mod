@@ -159,8 +159,11 @@ import de.dakror.quarry.structure.producer.Excavator;
 import de.dakror.quarry.structure.producer.Mine;
 import de.dakror.quarry.structure.producer.OilWell;
 import de.dakror.quarry.structure.storage.Barrel;
+import de.dakror.quarry.structure.storage.DigitalStorage;
+import de.dakror.quarry.structure.storage.Silo;
 import de.dakror.quarry.structure.storage.Storage;
 import de.dakror.quarry.structure.storage.Tank;
+import de.dakror.quarry.structure.storage.Warehouse;
 import de.dakror.quarry.util.Bounds;
 import de.dakror.quarry.util.QuarrySoundPlayer;
 import de.dakror.quarry.util.SpriterDelegateBatch;
@@ -1493,6 +1496,7 @@ public class Game extends GameScene {
     public static boolean SINGLE_FRAME = false;
     public static boolean UI_VISIBLE = true;
     public static boolean SMOOTH_CAMERA = false;
+    public static boolean INCREASE_MODE = Quarry.Q.prefs.getBoolean("increase_mode", false);
 
     private static final Pattern fileRegex = Pattern.compile("[^0-9a-zA-Z-_]");
 
@@ -1974,16 +1978,16 @@ public class Game extends GameScene {
         if (Quarry.Q.desktop && (ui.prompt.getStage() == null || !ui.prompt.isVisible())
                 && !ui.menu.menuButton.isChecked()) {
             if (!SMOOTH_CAMERA) {
-                if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
+                if (Gdx.input.isKeyPressed(Keys.LEFT)) {
                     cam.position.x -= 700 * cam.zoom * deltaTime;
                 }
-                if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
+                if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
                     cam.position.x += 700 * cam.zoom * deltaTime;
                 }
-                if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)) {
+                if (Gdx.input.isKeyPressed(Keys.UP)) {
                     cam.position.y += 700 * cam.zoom * deltaTime;
                 }
-                if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
+                if (Gdx.input.isKeyPressed(Keys.DOWN)) {
                     cam.position.y -= 700 * cam.zoom * deltaTime;
                 }
             } else {
@@ -1991,10 +1995,10 @@ public class Game extends GameScene {
                 camControl.clampCam(cam);
                 camControl.clampZoom(cam.zoom + cameraVelocity.z);
 
-                if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
+                if (Gdx.input.isKeyPressed(Keys.LEFT)) {
                     cameraVelocity.x = (float) Math.max(-cameraMaxSpeed,
                             cameraVelocity.x - cameraAcc * deltaTime * cam.zoom * (cameraVelocity.y > 0 ? 2 : 1));
-                } else if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
+                } else if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
                     cameraVelocity.x = (float) Math.min(cameraMaxSpeed,
                             cameraVelocity.x + cameraAcc * deltaTime * cam.zoom * (cameraVelocity.y < 0 ? 2 : 1));
                 } else {
@@ -2006,10 +2010,10 @@ public class Game extends GameScene {
                     }
                 }
 
-                if (Gdx.input.isKeyPressed(Keys.S) || Gdx.input.isKeyPressed(Keys.DOWN)) {
+                if (Gdx.input.isKeyPressed(Keys.DOWN)) {
                     cameraVelocity.y = (float) Math.max(-cameraMaxSpeed,
                             cameraVelocity.y - cameraAcc * deltaTime * cam.zoom * (cameraVelocity.y > 0 ? 2 : 1));
-                } else if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)) {
+                } else if (Gdx.input.isKeyPressed(Keys.UP)) {
                     cameraVelocity.y = (float) Math.min(cameraMaxSpeed,
                             cameraVelocity.y + cameraAcc * deltaTime * cam.zoom * (cameraVelocity.y < 0 ? 2 : 1));
                 } else {
@@ -3150,7 +3154,11 @@ public class Game extends GameScene {
             Integer val = resources.get(item);
             if (val == null)
                 return false;
-            val -= amount;
+            if (INCREASE_MODE) {
+                val += amount;
+            } else {
+                val -= amount;
+            }
             if (val < 0)
                 val = 0;
             resources.put(item, val);
@@ -4010,7 +4018,7 @@ public class Game extends GameScene {
             case Keys.ESCAPE:
                 ui.menu.menuButton.setChecked(!ui.menu.menuButton.isChecked());
                 return true;
-            case Keys.B:
+            case Keys.Q:
                 ui.destroyButton.setChecked(false);
                 if (!ui.buildButton.isChecked()) {
                     ui.showBuildMenu();
@@ -4026,6 +4034,63 @@ public class Game extends GameScene {
             case Keys.F:
                 ui.flipActiveStructure();
                 return true;
+            case Keys.NUM_2:
+                if (!ui.layerSelection.up10.isDisabled()) {
+                    ui.layerSelection.up10.setChecked(!ui.layerSelection.up10.isChecked());
+                }
+                return true;
+            case Keys.W:
+                if (!ui.layerSelection.up.isDisabled()) {
+                    ui.layerSelection.up.setChecked(!ui.layerSelection.up.isChecked());
+                }
+                return true;
+            case Keys.S:
+                if (!ui.layerSelection.down.isDisabled()) {
+                    ui.layerSelection.down.setChecked(!ui.layerSelection.down.isChecked());
+                }
+                return true;
+            case Keys.X:
+                if (!ui.layerSelection.down10.isDisabled()) {
+                    ui.layerSelection.down10.setChecked(!ui.layerSelection.down10.isChecked());
+                }
+                return true;
+            case Keys.G:
+                if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Keys.CONTROL_RIGHT)) {
+                    GOD_MODE = !GOD_MODE;
+                    ui.onScienceChange();
+                }
+                return true;
+            case Keys.L:
+                if (GOD_MODE) {
+                    addLayer();
+                }
+                return true;
+            case Keys.M:
+                INCREASE_MODE = !INCREASE_MODE;
+                Quarry.Q.prefs.putBoolean("increase_mode", INCREASE_MODE).flush();
+                return true;
+            case Keys.P:
+                if (ui.currentClickedStructure instanceof StorageStructure || ui.currentClickedStructure instanceof Tank) {
+                    // toggle pump_out
+                    ui.structureUIButtons[0].setChecked(!ui.structureUIButtons[0].isChecked());
+                }
+                return true;
+            case Keys.NUM_3:
+                if (ui.destroyButton.isChecked()) {
+                    ui.bulkButton.setChecked(!ui.bulkButton.isChecked());
+                }
+                return true;
+            case Keys.NUM_4:
+                if (ui.destroyButton.isChecked()) {
+                    ui.bulkCableButton.setChecked(!ui.bulkCableButton.isChecked());
+                }
+                return true;
+            case Keys.NUM_5:
+                if (ui.destroyButton.isChecked()) {
+                    ui.cableRemoveButton.setChecked(!ui.cableRemoveButton.isChecked());
+                }
+                return true;
+            case Keys.E:
             case Keys.DEL:
             case Keys.FORWARD_DEL:
                 resetActiveStructure();
